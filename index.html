@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="I love you 3000 - A typewriter effect message">
+    <meta name="description" content="I love you 3000 - A typewriter effect message with music">
     <title>I love you 3000</title>
 
     <style>
@@ -28,6 +28,34 @@
         #container {
             max-width: 90vw;
             word-wrap: break-word;
+        }
+
+        .music-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: clamp(0.9rem, 3vw, 1.2rem);
+            border-radius: 50px;
+            cursor: pointer;
+            margin-bottom: 30px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            font-weight: bold;
+        }
+
+        .music-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .music-button:active {
+            transform: scale(0.98);
+        }
+
+        .music-button.playing {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            box-shadow: 0 4px 15px rgba(245, 87, 108, 0.4);
         }
 
         #text {
@@ -60,6 +88,11 @@
             #text {
                 font-size: clamp(1.2rem, 6vw, 2.5rem);
             }
+
+            .music-button {
+                padding: 10px 20px;
+                margin-bottom: 25px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -70,20 +103,35 @@
             #text {
                 font-size: clamp(1rem, 7vw, 2rem);
             }
+
+            .music-button {
+                padding: 10px 18px;
+                margin-bottom: 20px;
+                font-size: 0.9rem;
+            }
         }
     </style>
 </head>
 <body>
 
 <div id="container">
+    <button class="music-button" id="musicBtn" onclick="toggleMusic()">🎵 Play Music</button>
     <div id="text"></div><span class="cursor">|</span>
 </div>
+
+<audio id="music">
+    <source src="https://assets.mixkit.co/active_storage/sfx/2761/2761-preview.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+</audio>
 
 <script>
     const message = "I love you 3000";
 
     let i = 0;
     const textElement = document.getElementById("text");
+    const musicBtn = document.getElementById("musicBtn");
+    const audio = document.getElementById("music");
+    let isPlaying = false;
 
     function typeWriter() {
         if (i < message.length) {
@@ -93,7 +141,21 @@
         }
     }
 
-    // Start after 1 second
+    function toggleMusic() {
+        if (isPlaying) {
+            audio.pause();
+            musicBtn.textContent = "🎵 Play Music";
+            musicBtn.classList.remove("playing");
+            isPlaying = false;
+        } else {
+            audio.play();
+            musicBtn.textContent = "⏸️ Pause Music";
+            musicBtn.classList.add("playing");
+            isPlaying = true;
+        }
+    }
+
+    // Start typewriter after 1 second
     setTimeout(typeWriter, 1000);
 </script>
 
