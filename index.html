@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="I love you 3000 - A typewriter effect message">
+    <title>I love you 3000</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: black;
+            color: white;
+            font-family: Georgia, serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            text-align: center;
+        }
+
+        #container {
+            max-width: 90vw;
+            word-wrap: break-word;
+        }
+
+        #text {
+            font-size: clamp(1.5rem, 5vw, 3rem);
+            white-space: pre-wrap;
+            line-height: 1.4;
+            letter-spacing: 0.05em;
+        }
+
+        .cursor {
+            animation: blink 1s infinite;
+            font-size: clamp(1.5rem, 5vw, 3rem);
+        }
+
+        @keyframes blink {
+            0%, 49%, 100% {
+                opacity: 1;
+            }
+            50%, 99% {
+                opacity: 0;
+            }
+        }
+
+        /* Mobile optimizations */
+        @media (max-width: 768px) {
+            body {
+                padding: 20px 15px;
+            }
+
+            #text {
+                font-size: clamp(1.2rem, 6vw, 2.5rem);
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 15px 10px;
+            }
+
+            #text {
+                font-size: clamp(1rem, 7vw, 2rem);
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div id="container">
+    <div id="text"></div><span class="cursor">|</span>
+</div>
+
+<script>
+    const message = "I love you 3000";
+
+    let i = 0;
+    const textElement = document.getElementById("text");
+
+    function typeWriter() {
+        if (i < message.length) {
+            textElement.textContent += message.charAt(i);
+            i++;
+            setTimeout(typeWriter, 120);
+        }
+    }
+
+    // Start after 1 second
+    setTimeout(typeWriter, 1000);
+</script>
+
+</body>
+</html>
